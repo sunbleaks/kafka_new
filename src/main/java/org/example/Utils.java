@@ -15,11 +15,11 @@ public class Utils {
         Admin admin = Admin.create(Map.of(
                 AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, host));
 
-        List<String> nameTopics = admin.listTopics().listings().get()
-                .stream().map(TopicListing::name).toList();
+        //List<String> nameTopics = admin.listTopics().listings().get()
+        //        .stream().map(TopicListing::name).toList();
 
-        logger.info("удаление топиков в брокере: " + nameTopics);
-        DeleteTopicsResult deleteTopicsResult = admin.deleteTopics(nameTopics);
+        logger.info("удаление топиков в брокере: " + topics);
+        DeleteTopicsResult deleteTopicsResult = admin.deleteTopics(topics);
         while (!deleteTopicsResult.all().isDone()) {
             //logger.info("...");
         }

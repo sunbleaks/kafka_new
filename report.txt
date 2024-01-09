@@ -1,0 +1,55 @@
+14:56:28.089 [main] INFO  org.example.Utils - удаление топиков в брокере: [event-source]
+14:56:28.632 [main] INFO  org.example.Utils - создание топиков [event-source] с параметрами: numPartitions=3 replicationFactor=1
+14:56:28.981 [main] INFO  org.example.Main - Topologies:
+   Sub-topology: 0
+    Source: KSTREAM-SOURCE-0000000000 (topics: [event-source])
+      --> KSTREAM-FILTER-0000000001
+    Processor: KSTREAM-FILTER-0000000001 (stores: [])
+      --> KSTREAM-KEY-SELECT-0000000002
+      <-- KSTREAM-SOURCE-0000000000
+    Processor: KSTREAM-KEY-SELECT-0000000002 (stores: [])
+      --> KSTREAM-FILTER-0000000005
+      <-- KSTREAM-FILTER-0000000001
+    Processor: KSTREAM-FILTER-0000000005 (stores: [])
+      --> KSTREAM-SINK-0000000004
+      <-- KSTREAM-KEY-SELECT-0000000002
+    Sink: KSTREAM-SINK-0000000004 (topic: KSTREAM-REPARTITION-0000000003-repartition)
+      <-- KSTREAM-FILTER-0000000005
+
+  Sub-topology: 1
+    Source: KSTREAM-SOURCE-0000000006 (topics: [KSTREAM-REPARTITION-0000000003-repartition])
+      --> KSTREAM-PEEK-0000000007
+    Processor: KSTREAM-PEEK-0000000007 (stores: [])
+      --> KSTREAM-PROCESSVALUES-0000000008
+      <-- KSTREAM-SOURCE-0000000006
+    Processor: KSTREAM-PROCESSVALUES-0000000008 (stores: [event-store-count])
+      --> KSTREAM-PEEK-0000000009
+      <-- KSTREAM-PEEK-0000000007
+    Processor: KSTREAM-PEEK-0000000009 (stores: [])
+      --> none
+      <-- KSTREAM-PROCESSVALUES-0000000008
+
+
+14:57:06.982 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
+14:57:06.989 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Count: www -> 1
+14:57:06.990 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
+14:57:06.990 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Count: www -> 2
+14:57:06.990 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
+14:57:06.990 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Count: www -> 3
+14:57:36.857 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:57:36.857 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:57:36.857 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:58:06.892 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:58:06.893 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:58:06.893 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:58:36.814 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:58:36.915 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:58:36.916 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:59:06.842 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:59:06.842 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:59:06.842 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:59:36.863 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:59:36.864 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+14:59:36.864 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
+
+Process finished with exit code 0
