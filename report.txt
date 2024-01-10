@@ -1,6 +1,7 @@
-14:56:28.089 [main] INFO  org.example.Utils - удаление топиков в брокере: [event-source]
-14:56:28.632 [main] INFO  org.example.Utils - создание топиков [event-source] с параметрами: numPartitions=3 replicationFactor=1
-14:56:28.981 [main] INFO  org.example.Main - Topologies:
+/home/oleg/WORK/JAVA/jdks/jdk-17.0.9/bin/java -javaagent:/snap/intellij-idea-community/475/lib/idea_rt.jar=44389:/snap/intellij-idea-community/475/bin -Dfile.encoding=UTF-8 -classpath /home/oleg/WORK/JAVA/IdeaProjects/otus/kafka/home_work/target/classes:/home/oleg/.m2/repository/org/apache/kafka/kafka-clients/3.5.0/kafka-clients-3.5.0.jar:/home/oleg/.m2/repository/com/github/luben/zstd-jni/1.5.5-1/zstd-jni-1.5.5-1.jar:/home/oleg/.m2/repository/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar:/home/oleg/.m2/repository/org/xerial/snappy/snappy-java/1.1.10.0/snappy-java-1.1.10.0.jar:/home/oleg/.m2/repository/org/apache/kafka/kafka-streams/3.5.0/kafka-streams-3.5.0.jar:/home/oleg/.m2/repository/org/rocksdb/rocksdbjni/7.1.2/rocksdbjni-7.1.2.jar:/home/oleg/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.13.5/jackson-annotations-2.13.5.jar:/home/oleg/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.13.5/jackson-databind-2.13.5.jar:/home/oleg/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.13.5/jackson-core-2.13.5.jar:/home/oleg/.m2/repository/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar:/home/oleg/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/home/oleg/.m2/repository/com/github/javafaker/javafaker/1.0.2/javafaker-1.0.2.jar:/home/oleg/.m2/repository/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar:/home/oleg/.m2/repository/org/yaml/snakeyaml/1.23/snakeyaml-1.23-android.jar:/home/oleg/.m2/repository/com/github/mifmif/generex/1.0.2/generex-1.0.2.jar:/home/oleg/.m2/repository/dk/brics/automaton/automaton/1.11-8/automaton-1.11-8.jar:/home/oleg/.m2/repository/org/slf4j/slf4j-api/2.0.7/slf4j-api-2.0.7.jar:/home/oleg/.m2/repository/ch/qos/logback/logback-classic/1.4.14/logback-classic-1.4.14.jar:/home/oleg/.m2/repository/ch/qos/logback/logback-core/1.4.14/logback-core-1.4.14.jar org.example.Main
+11:59:59.456 [main] INFO  org.example.Utils - удаление топиков в брокере: [event-source]
+12:00:00.038 [main] INFO  org.example.Utils - создание топиков [event-source] с параметрами: numPartitions=3 replicationFactor=1
+12:00:00.423 [main] INFO  org.example.Main - Topologies:
    Sub-topology: 0
     Source: KSTREAM-SOURCE-0000000000 (topics: [event-source])
       --> KSTREAM-FILTER-0000000001
@@ -20,36 +21,23 @@
     Source: KSTREAM-SOURCE-0000000006 (topics: [KSTREAM-REPARTITION-0000000003-repartition])
       --> KSTREAM-PEEK-0000000007
     Processor: KSTREAM-PEEK-0000000007 (stores: [])
-      --> KSTREAM-PROCESSVALUES-0000000008
+      --> KSTREAM-AGGREGATE-0000000009
       <-- KSTREAM-SOURCE-0000000006
-    Processor: KSTREAM-PROCESSVALUES-0000000008 (stores: [event-store-count])
-      --> KSTREAM-PEEK-0000000009
+    Processor: KSTREAM-AGGREGATE-0000000009 (stores: [KSTREAM-AGGREGATE-STATE-STORE-0000000008])
+      --> KTABLE-TOSTREAM-0000000010
       <-- KSTREAM-PEEK-0000000007
-    Processor: KSTREAM-PEEK-0000000009 (stores: [])
+    Processor: KTABLE-TOSTREAM-0000000010 (stores: [])
+      --> KSTREAM-FOREACH-0000000011
+      <-- KSTREAM-AGGREGATE-0000000009
+    Processor: KSTREAM-FOREACH-0000000011 (stores: [])
       --> none
-      <-- KSTREAM-PROCESSVALUES-0000000008
+      <-- KTABLE-TOSTREAM-0000000010
 
 
-14:57:06.982 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
-14:57:06.989 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Count: www -> 1
-14:57:06.990 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
-14:57:06.990 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Count: www -> 2
-14:57:06.990 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
-14:57:06.990 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Count: www -> 3
-14:57:36.857 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:57:36.857 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:57:36.857 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:58:06.892 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:58:06.893 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:58:06.893 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:58:36.814 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:58:36.915 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:58:36.916 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:59:06.842 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:59:06.842 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:59:06.842 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:59:36.863 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:59:36.864 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-14:59:36.864 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Сеанс 30 сек завершен
-
-Process finished with exit code 0
+12:00:10.362 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
+12:00:15.938 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
+12:00:19.110 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
+12:00:22.316 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
+12:00:31.316 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Count: [www@1704880810241/1704880822211] -> 4
+12:01:02.575 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Event: www -> www
+12:01:31.459 [hm12-01f828f2-3606-4741-b03b-0f2674d0b6cf-StreamThread-1] INFO  org.example.Main - Count: [www@1704880862470/1704880862470] -> 1

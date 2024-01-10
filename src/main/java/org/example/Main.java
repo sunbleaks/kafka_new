@@ -8,6 +8,7 @@ import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Repartitioned;
+import org.apache.kafka.streams.kstream.SessionWindows;
 import org.apache.kafka.streams.processor.PunctuationType;
 import org.apache.kafka.streams.processor.StreamPartitioner;
 import org.apache.kafka.streams.processor.WallclockTimestampExtractor;
@@ -44,27 +45,28 @@ public class Main {
         //читаем из источника текстовый сообщения
         KStream<Void, String> kStream = streamsBuilder
                 .stream(topics, Consumed.with(Serdes.Void(), Serdes.String())
-                        .withTimestampExtractor(new WallclockTimestampExtractor())); // считаем началом прохождения события по конвееру
+                        .withTimestampExtractor(new WallclockTimestampExtractor())); // начало прохождения события по конвееру
 
         //создаем новый поток
         //навсякий случай фильтруем если сообщение пустое
-        //добавялем ключ и
-        //!!!условие для repartition - без этого в key-store даже с ключами добавляет в патришины с RoundRobin (не то что нужно)
+        //добавялем ключ
         KStream<String, String> keyedStream =
                 kStream
                 .filter((key, value) -> !value.isEmpty())
                 .selectKey((key, value) -> value)
                 .repartition(Repartitioned.with(Serdes.String(), Serdes.String()).withStreamPartitioner(new Partitioner()));
 
-
         keyedStream
                 .peek((k, v) -> logger.info("Event: {} -> {}", k, v))
-                .processValues(CountProcessor::new, "event-store-count") //подсчет событий с одинаковыми клчючами
-                .peek((k, v) -> logger.info("Count: {} -> {}", k, v));
-
+                .groupByKey() //группируем
+                .windowedBy(SessionWindows.ofInactivityGapAndGrace(Duration.ofSeconds(30), Duration.ofMillis(0)))
+                .count()
+                .toStream()
+                .foreach((key, value) -> {
+                    logger.info("Count: {} -> {}", key, value);
+                });
 
         logger.info("{}", streamsBuilder.build().describe());
-
 
         KafkaStreams kafkaStreams = null;
         try{
